@@ -31,6 +31,10 @@ const homeStyles = StyleSheet.create({
     navText:{
         fontSize:20,
         textAlign:"center"
+    },
+    image:{
+        width:100,
+        height:100
     }
 })
 export default homeStyles;
