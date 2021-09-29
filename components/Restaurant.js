@@ -10,9 +10,7 @@ export default function Restaurant({restaurant}){
                 <Image style={styles.icon} source={require('../assets/004-table.png')}/>
             </View>
             
-            <TouchableOpacity style={styles.button}>
-                <Text style={{textAlign:"center"}}>View More</Text>
-            </TouchableOpacity>
+            <Button title="View More"/>
         </View>
     )
 }

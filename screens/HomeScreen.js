@@ -13,12 +13,7 @@ export default function HomeScreen({ navigation }){
                         <Text style={homeStyles.navText}>View Restaurants</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={homeStyles.navItem}>
-                    <View >
-                        <Text style={homeStyles.navText}>Get Random Restaurant</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={homeStyles.navItem}>
+                <TouchableOpacity style={homeStyles.navItem} onPress={() => navigation.navigate('About')}>
                     <View >
                         <Text style={homeStyles.navText}>About</Text>
                     </View>
