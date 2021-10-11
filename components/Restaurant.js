@@ -1,27 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text, View,Button,TouchableOpacity,Image } from 'react-native';
 
-export default function Restaurant({restaurant}){
+export default function Restaurant({restaurant,navigation}){
     return(
-        <View style={styles.container}>
-            <Text style={styles.name}>{restaurant.name}</Text>
-            <View style={styles.secondary}>
-                <Text>{restaurant.type}</Text>
-                <Image style={styles.icon} source={require('../assets/004-table.png')}/>
-            </View>
-            
-            <Button title="View More"/>
-        </View>
+        
+
+           <Text>{restaurant.name}</Text>
+    
     )
 }
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:"#EEEEEE",
+        
         margin:10,
-        minWidth:"80%",
-        padding:5
+       
+        padding:50,
+        borderWidth:3,
+        borderRadius:10
+    },
+    restaurantBox:{
+        padding:10
     },
     name:{
         fontSize:20,
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     secondary:{
         flexDirection:"row",
         justifyContent:"space-between",
-        width:"25%"
+        width:"50%"
     }
 })

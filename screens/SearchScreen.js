@@ -1,38 +1,55 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity } from 'react-native';
+import React, {useState,useEffect} from 'react';
+import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity,SafeAreaView } from 'react-native';
+import axios from 'axios';
 import Restaurant from '../components/Restaurant';
 import allRestaurants from '../data/restaurants';
-export default function SearchScreen(){
-    const [restaurants,setRestaurants] = useState(allRestaurants)
+import RestaurantInfo from './RestaurantInfo';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const SearchStack = createNativeStackNavigator();
+export default function SearchScreen({navigation}){
+    const [restaurants,setRestaurants] = useState([])
     const [cuisine,setCuisine] = useState("")
+
+    const getRestaurants = () => {
+        axios.get("https://dineryapi.herokuapp.com/restaurants")
+        .then(response =>setRestaurants(response.data))
+        .catch(err => console.log(err))
+    }
     const renderRestaurant = (restaurant) => {
-        return <Restaurant restaurant={restaurant.item}/>
+       
+        return (
+            <TouchableOpacity onPress={() => 
+            navigation.navigate('Info',{restaurantID:restaurant.item._id})}>
+                <Restaurant restaurant={restaurant.item}/>
+            </TouchableOpacity>
+        
+        )
     }
     const getCuisine = (event) => {
         setCuisine(event)
     }
     const search = () => {
-        console.log(cuisine)
-        if(cuisine === ""){
-            setRestaurants(allRestaurants)
-        }
-        else{
-            setRestaurants(allRestaurants.filter(rest => rest.cuisine === cuisine))
-        }
+        axios.get(`https://dineryapi.herokuapp.com/restaurants?cuisine=${cuisine}`)
+        .then(response => console.log(response.data))
+        .catch(err => console.log(err))
     }
 
-    
-    return(
-        <View style={styles.container}>
-            <View style={styles.searchArea}>
-                <TextInput style={styles.searchBar} placeholder="Enter Cuisine" onChangeText={getCuisine}/>
-                <TouchableOpacity style={styles.searchButton} onPress={search}>
-                    <Text style={{textAlign:"center", justifySelf:"center"}}>Search</Text>
-                </TouchableOpacity>
+    useEffect(() => {
+        getRestaurants()
+    })
+    if(restaurants.length === 0){
+        return(
+            <View>
+                <Text>no restaurants</Text>
             </View>
-            
-           <FlatList data={restaurants} renderItem={renderRestaurant} keyExtractor={res => res.id}/>
-        </View>
+        )
+    }
+    return(
+        <SafeAreaView>
+           <FlatList data={restaurants} renderItem={renderRestaurant} keyExtractor={(item) => item._id}/>
+        </SafeAreaView>  
+        
     )
 }
 
