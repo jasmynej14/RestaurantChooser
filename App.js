@@ -7,8 +7,9 @@ import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import AboutScreen from './screens/AboutScreen';
 import RestaurantInfo from './screens/RestaurantInfo';
+import ProfileScreen from './screens/ProfileScreen';
 import Restaurants from './screens/Restaurants';
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/AntDesign'
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function App() {
@@ -18,14 +19,19 @@ export default function App() {
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen}
           options={{
-            tabBarIcon:() => (<Icon name="ios-home" size={25}/>),
+            tabBarIcon:(focused) => (<Icon name="home" size={25} color={focused? "red" : "black"}/>),
             headerShown:false
           }}/>
           <Tab.Screen name="Restaurants" component={Restaurants}
           options={{
-            tabBarIcon: () => (<Icon name="search" size={25}/>),
+            tabBarIcon: (focused) => (<Icon name="search1" size={25} color={focused? "gray" : "black"}/>),
             headerShown:false
           }}
+          />
+          <Tab.Screen name="Profile" component={ProfileScreen}
+            options={{
+              tabBarIcon: (focused) => (<Icon name="user" size={25} color={focused? "gray" : "black"}/>)
+            }}
           />
         </Tab.Navigator>
     </NavigationContainer>
