@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity,SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity,SafeAreaView,ScrollView } from 'react-native';
 import axios from 'axios';
 import Restaurant from '../components/Restaurant';
 import restaurantStyles from '../styles/restaurantStyles';
@@ -11,7 +11,7 @@ const SearchStack = createNativeStackNavigator();
 export default function SearchScreen({navigation}){
     const [restaurants,setRestaurants] = useState([])
     const [cuisine,setCuisine] = useState("")
-
+    const categories = ['Italian','French','Pizza','Sandwiches','American']
     const getRestaurants = () => {
         axios.get("https://dineryapi.herokuapp.com/restaurants")
         .then(response =>setRestaurants(response.data))
@@ -26,6 +26,17 @@ export default function SearchScreen({navigation}){
             </TouchableOpacity>
         
         )
+    }
+
+    const renderCategories = () => {
+        categories.map((category) => {
+            return(
+                <TouchableOpacity style={[styles.filterButton,styles.selectedFilter]}>
+                    <Text style={styles.categoryText}>{category}</Text>
+                </TouchableOpacity>
+            )
+            
+        })
     }
     const getCuisine = (event) => {
         setCuisine(event)
@@ -48,6 +59,14 @@ export default function SearchScreen({navigation}){
     }
     return(
         <SafeAreaView style={restaurantStyles.container}>
+            <ScrollView style={styles.searchArea} horizontal={true}>
+               {categories.map((category) => 
+                   <TouchableOpacity style={[styles.filterButton]} key={category}>
+                   <Text style={styles.categoryText}>{category}</Text>
+                   </TouchableOpacity>
+               )}
+            </ScrollView>
+
            <FlatList data={restaurants} renderItem={renderRestaurant} keyExtractor={(item) => item._id}/>
         </SafeAreaView>  
         
@@ -62,7 +81,28 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     searchArea:{
-        flexDirection:"row"
+        flexDirection:"row",
+        backgroundColor:"#F5CBA7",
+        padding:20,
+        borderRadius:10,
+        margin:10,
+      
+    },
+    filterButton:{
+        backgroundColor:"#FEF9E7",
+        borderRadius:5,
+        padding:5,
+        marginRight:10,
+        minWidth:100,
+        justifyContent:"center",
+        
+    },
+    categoryText:{
+        textAlign:"center",
+        fontSize:20
+    },
+    selectedFilter:{
+        backgroundColor:"#F7DC6F"
     },
     searchBar:{
         borderColor:"black",
