@@ -1,11 +1,23 @@
 import React from 'react';
+import Rating from './Rating';
 import { StyleSheet, Text, View,Button,TouchableOpacity,Image } from 'react-native';
 
 export default function Restaurant({restaurant,navigation}){
     return(
         
-
-           <Text>{restaurant.name}</Text>
+            <View style={styles.restaurantBox}>
+                <View>
+                    <Image source={require('../assets/002-restaurant.png')} style={styles.icon}/>
+                </View>
+                <View>
+                    <Text style={styles.name}>{restaurant.name}</Text>
+                    <Rating  rating={restaurant.rating}/>
+                    <Text>{restaurant.type}</Text>
+                    <Text>{restaurant.cuisine}</Text>
+                </View>
+                
+            </View>
+           
     
     )
 }
@@ -21,7 +33,11 @@ const styles = StyleSheet.create({
         borderRadius:10
     },
     restaurantBox:{
-        padding:10
+        padding:10,
+        backgroundColor:"#F7F8EB",
+        margin:10,
+        flexDirection:"row",
+        borderRadius:10
     },
     name:{
         fontSize:20,
@@ -36,8 +52,8 @@ const styles = StyleSheet.create({
         textAlign:"center"
     },
     icon:{
-        width:20,
-        height:20
+        width:40,
+        height:40
     },
     secondary:{
         flexDirection:"row",

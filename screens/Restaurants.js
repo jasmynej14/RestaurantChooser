@@ -3,6 +3,7 @@ import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity } fro
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from './SearchScreen';
 import RestaurantInfo from './RestaurantInfo';
+
 const RestaurantStack = createNativeStackNavigator()
 export default function Restaurants(){
 

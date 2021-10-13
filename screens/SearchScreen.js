@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react';
 import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity,SafeAreaView } from 'react-native';
 import axios from 'axios';
 import Restaurant from '../components/Restaurant';
+import restaurantStyles from '../styles/restaurantStyles';
 import allRestaurants from '../data/restaurants';
 import RestaurantInfo from './RestaurantInfo';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -40,13 +41,13 @@ export default function SearchScreen({navigation}){
     })
     if(restaurants.length === 0){
         return(
-            <View>
-                <Text>no restaurants</Text>
+            <View style={restaurantStyles.container}>
+                <Text>Loading Restaurants...</Text>
             </View>
         )
     }
     return(
-        <SafeAreaView>
+        <SafeAreaView style={restaurantStyles.container}>
            <FlatList data={restaurants} renderItem={renderRestaurant} keyExtractor={(item) => item._id}/>
         </SafeAreaView>  
         
