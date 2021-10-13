@@ -13,55 +13,56 @@ export default function SearchScreen({navigation}){
     const [cuisine,setCuisine] = useState("")
     const categories = ['Italian','French','Pizza','Sandwiches','American']
     const getRestaurants = () => {
-        axios.get("https://dineryapi.herokuapp.com/restaurants")
-        .then(response =>setRestaurants(response.data))
-        .catch(err => console.log(err))
-    }
-    const renderRestaurant = (restaurant) => {
+        if(cuisine === ""){
+            axios.get("https://dineryapi.herokuapp.com/restaurants")
+            .then(response =>setRestaurants(response.data))
+            .catch(err => console.log(err))
+        }
+        else{
+            axios.get(`https://dineryapi.herokuapp.com/restaurants?cuisine=${cuisine}`)
+            .then(response => setRestaurants(response.data))
+            .catch(err => console.log(err))
+        }
        
+    }
+    const renderRestaurant = (restaurant) => { 
         return (
             <TouchableOpacity onPress={() => 
             navigation.navigate('Info',{restaurantID:restaurant.item._id})}>
                 <Restaurant restaurant={restaurant.item}/>
-            </TouchableOpacity>
-        
+            </TouchableOpacity>     
         )
     }
 
-    const renderCategories = () => {
-        categories.map((category) => {
-            return(
-                <TouchableOpacity style={[styles.filterButton,styles.selectedFilter]}>
-                    <Text style={styles.categoryText}>{category}</Text>
-                </TouchableOpacity>
-            )
-            
-        })
-    }
-    const getCuisine = (event) => {
-        setCuisine(event)
-    }
-    const search = () => {
-        axios.get(`https://dineryapi.herokuapp.com/restaurants?cuisine=${cuisine}`)
-        .then(response => console.log(response.data))
-        .catch(err => console.log(err))
-    }
+    const filterRestaurants = () => {
 
+    }
+    const setFilter = (category) => {
+        if(cuisine === category){
+            setCuisine("")
+        }
+        else{
+            setCuisine(category)
+        }
+    }
     useEffect(() => {
         getRestaurants()
     })
+
+
+
     if(restaurants.length === 0){
         return(
-            <View style={restaurantStyles.container}>
+            <SafeAreaView style={restaurantStyles.container}>
                 <Text>Loading Restaurants...</Text>
-            </View>
+            </SafeAreaView>
         )
     }
     return(
         <SafeAreaView style={restaurantStyles.container}>
             <ScrollView style={styles.searchArea} horizontal={true}>
                {categories.map((category) => 
-                   <TouchableOpacity style={[styles.filterButton]} key={category}>
+                   <TouchableOpacity style={[styles.filterButton,category===cuisine &&styles.selectedFilter]} key={category} onPress={() => setFilter(category)}>
                    <Text style={styles.categoryText}>{category}</Text>
                    </TouchableOpacity>
                )}
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
         padding:20,
         borderRadius:10,
         margin:10,
+        maxHeight:100
       
     },
     filterButton:{
