@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { TouchableOpacity, Text, View,Image,StyleSheet,TextInput } from 'react-native';
+import { TouchableOpacity, Text, View,Image,StyleSheet,TextInput,SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ProfileScreen(){
     const [profile,setProfile] = useState({name:"",location:""})
@@ -40,7 +40,7 @@ export default function ProfileScreen(){
        getProfile()
    })
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.userInfo}>
                 <Image source={require('../assets/icons8-Office-Beyonce.png')} style={styles.profileImage}/>
                 <Text style={styles.profileText}>{profile.name === ""? "Enter Name":profile.name}</Text>
@@ -50,14 +50,11 @@ export default function ProfileScreen(){
             <TouchableOpacity style={[styles.editButton,showEdit && styles.selected]} onPress={() => setShowEdit(true)}>
                 <Text>Edit Profile</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.editButton,showEdit && styles.selected]} onPress={getProfile}>
-                <Text>Load Profile</Text>
-            </TouchableOpacity>
             {showEdit ? 
                 <View style={styles.editArea}>
-                <Text style={{fontSize:20,fontWeight:300,margin:10}}>Name</Text>
+                <Text style={{fontSize:20,margin:10}}>Name</Text>
                 <TextInput placeholder="name" style={styles.input} onChangeText={(value) => setName(value)}/>
-                <Text style={{fontSize:20,fontWeight:300,margin:10}}>Location</Text>
+                <Text style={{fontSize:20,margin:10}}>Location</Text>
                 <TextInput placeholder="location" style={styles.input} onChangeText={(value) => setLocation(value)}/>
                 <TouchableOpacity style={styles.editButton} onPress={editProfile}>
                     <Text>Edit</Text>
@@ -69,7 +66,7 @@ export default function ProfileScreen(){
             </View>
             }
             
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -87,7 +84,6 @@ const styles = StyleSheet.create({
     },
     profileText:{
         fontSize:25,
-        fontWeight:300,
         textAlign:"center"
     },
     profileImage: {
