@@ -4,37 +4,38 @@ const homeStyles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems:'center'
+    
+        
     },
     title:{
-        fontSize:30,
+        fontSize:50,
         fontWeight:"bold",
         textAlign:"center"
     },
-    navBox:{
-        flex:0.5,
-        width:"75%",
-        backgroundColor:"#FFA07A",
-        alignItems:'center',
-        justifyContent:'center'
+    header:{
+        flex:1,
+        backgroundColor:"#FCF3CF",
+        margin:10,
+        borderRadius:10,
+        justifyContent:"center"
     },
-    navItem:{
-        backgroundColor:'#FFD700',
-        minWidth:"50%",
-        margin:5,
-        padding:5,
-        borderRadius:50,
-        borderColor:"#BDB76B",
-        borderWidth:5
+    recs:{
+        flex:4
     },
-    navText:{
-        fontSize:20,
-        textAlign:"center"
+    recents:{
+        flex:4,
     },
-    image:{
-        width:100,
-        height:100
+    rec:{
+        backgroundColor:"#ECF0F1",
+        margin:10,
+        padding:10,
+        borderRadius:10
+    },
+    order:{
+        backgroundColor:"#ECF0F1",
+        margin:10,
+        padding:10,
+        borderRadius:10
     }
 })
 export default homeStyles;
