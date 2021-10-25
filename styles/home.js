@@ -8,19 +8,20 @@ const homeStyles = StyleSheet.create({
         
     },
     title:{
-        fontSize:50,
+        fontSize:40,
         fontWeight:"bold",
         textAlign:"center"
     },
     header:{
-        flex:1,
+        flex:.5,
         backgroundColor:"#FCF3CF",
         margin:10,
         borderRadius:10,
         justifyContent:"center"
     },
     recs:{
-        flex:4
+        flex:6,
+
     },
     recents:{
         flex:4,
@@ -29,7 +30,9 @@ const homeStyles = StyleSheet.create({
         backgroundColor:"#ECF0F1",
         margin:10,
         padding:10,
-        borderRadius:10
+        borderRadius:10,
+        width:200,
+        justifyContent:"center"
     },
     order:{
         backgroundColor:"#ECF0F1",

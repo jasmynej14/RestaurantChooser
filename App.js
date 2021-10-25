@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 export default function App({ route }) {
   const [user,setUser] = useState({})
   return (
-    <UserContext.Provider value={[user,setUser]} >
+    <UserContext.Provider value={{user,setUser}} >
       <NavigationContainer>
        
        <Tab.Navigator screenOptions={{

@@ -16,7 +16,7 @@ export default function ProfileScreen(){
             //console.log(JSON.parse(value))
             if(value !== null){
                setProfile(JSON.parse(value))
-               //setUser(JSON.parse(value))
+               setUser(JSON.parse(value))
             }
             
         }
@@ -30,6 +30,7 @@ export default function ProfileScreen(){
         try {
             await AsyncStorage.removeItem('@profile')
             setProfile({})
+            setUser({})
             console.log("logged out")
         }
         catch(e){
