@@ -3,6 +3,8 @@ import { StyleSheet, Text, View,Button,TouchableOpacity,Image,SafeAreaView } fro
 import TypeImage from '../components/TypeImage';
 import { useFonts } from 'expo-font';
 import { Quicksand_400Regular,Quicksand_300Light,Quicksand_600SemiBold} from '@expo-google-fonts/dev';
+import Menu from '../components/Menu';
+import Rating from '../components/Rating'
 import axios from 'axios';
 export default function RestaurantInfo({route}){
     const {restaurantID} = route.params
@@ -27,18 +29,22 @@ export default function RestaurantInfo({route}){
     }
     return(
         <SafeAreaView style={styles.container}>
+            
             <View>
                 <Text style={styles.name}>{restaurant.name}</Text>
             </View>
             <View style={styles.infoBox}>
+                <TypeImage type={restaurant.type[0]}/>
+                <Rating rating={restaurant.rating}/>
                 <Text style={styles.address}>{restaurant.location.address}</Text>
                 <Text style={styles.address}>{restaurant.location.city},{restaurant.location.state}</Text>
             </View>
+            <TouchableOpacity style={styles.compareButton}>
+                <Text>Compare!</Text>
+            </TouchableOpacity>
             <View>
-                <Text>Compare</Text>
-            </View>
-            <View>
-                <Text>Menu</Text>
+                <Text>Menus</Text>
+                <Menu rest_id={restaurantID}/>
             </View>
             <View>
                 <Text>Reviews</Text>
@@ -62,10 +68,17 @@ const styles = StyleSheet.create({
        borderRadius:10,
        padding:10,
        margin:10,
-       textAlign:"center" 
+       textAlign:"center",
+       alignItems:"center" 
     },
     address:{
         fontFamily:'Quicksand_400Regular',
         fontSize:20
+    },
+    compareButton:{
+        backgroundColor:"#F8C471",
+        padding:10,
+        alignSelf:"center",
+        borderRadius:5
     }
 })

@@ -67,7 +67,7 @@ export default function ProfileScreen(){
                         <Text>Email:</Text>
                         <TextInput placeholder="email" style={styles.input} onChangeText={(email) => setEmail(email)}/>
                         <Text>Password:</Text>
-                        <TextInput placeholder="password" style={styles.input} onChangeText={(password) => setPassword(password)}/>
+                        <TextInput placeholder="password" secureTextEntry={true} style={styles.input} onChangeText={(password) => setPassword(password)}/>
                         <TouchableOpacity style={styles.editButton} onPress={logIn}>
                             <Text>Log In</Text>
                         </TouchableOpacity>
