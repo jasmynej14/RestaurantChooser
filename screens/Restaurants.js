@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,FlatList,TextInput,Button,TouchableOpacity } fro
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from './SearchScreen';
 import RestaurantInfo from './RestaurantInfo';
-
+import CompareScreen from './CompareScreen';
 const RestaurantStack = createNativeStackNavigator()
 export default function Restaurants(){
 
@@ -17,6 +17,7 @@ export default function Restaurants(){
             options={{
                 headerShown:false
             }}/>
+            <RestaurantStack.Screen name="Compare" component={CompareScreen}/>
         </RestaurantStack.Navigator>
     )
 }

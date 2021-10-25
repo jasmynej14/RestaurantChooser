@@ -1,25 +1,14 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext, Profiler} from 'react';
 import { TouchableOpacity, Text, View,Image,StyleSheet,TextInput,SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserContext from '../contexts/UserContext';
+import axios from 'axios';
 export default function ProfileScreen(){
-    const [profile,setProfile] = useState({name:"",location:""})
+    const [profile,setProfile] = useState({})
     const [showEdit,setShowEdit] = useState(false)
-    const [name,setName] = useState("")
-    const [location,setLocation] = useState("")
-
-    const editProfile = async () => {
-        setShowEdit(false)
-        //setProfile({name:name,location:location})
-        try{
-            const jsonProfile = JSON.stringify({name:name,location:location})
-            console.log(jsonProfile)
-            await AsyncStorage.setItem('@profile',jsonProfile)
-        }
-        catch (e){
-            console.log(e)
-        }
-        //save profile data 
-    }
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const {user,setUser} = useContext(UserContext)
 
     const getProfile = async () => {
         try{
@@ -27,6 +16,7 @@ export default function ProfileScreen(){
             //console.log(JSON.parse(value))
             if(value !== null){
                setProfile(JSON.parse(value))
+               //setUser(JSON.parse(value))
             }
             
         }
@@ -36,36 +26,71 @@ export default function ProfileScreen(){
 
     }
 
+    const logOut = async () => {
+        try {
+            await AsyncStorage.removeItem('@profile')
+            setProfile({})
+            console.log("logged out")
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+    const logIn = async () => {
+        try{
+            axios.post(`https://dineryapi.herokuapp.com/users/login`,{email:email,password:password})
+            .then(function(response){
+                if(response.data.loggedIn){
+                    AsyncStorage.setItem('@profile',JSON.stringify(response.data.user))
+                    setProfile(JSON.stringify(response.data.user))
+                   //setUser(response.data.user)
+                    console.log(JSON.stringify(response.data.user))
+                }
+            })
+            .catch(err => console.log(err))
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
    useEffect(() => {
        getProfile()
-   })
+   },[profile])
+   if(JSON.stringify(profile) === '{}'){
+       return(
+           <SafeAreaView style={styles.container}>
+               <View>
+                    <Text style={{fontSize:30,textAlign:"center"}}>Log In</Text>
+                    <View style={{margin:10}}>
+                        <Text>Email:</Text>
+                        <TextInput placeholder="email" style={styles.input} onChangeText={(email) => setEmail(email)}/>
+                        <Text>Password:</Text>
+                        <TextInput placeholder="password" style={styles.input} onChangeText={(password) => setPassword(password)}/>
+                        <TouchableOpacity style={styles.editButton} onPress={logIn}>
+                            <Text>Log In</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.editButton}>
+                            <Text>Create Account</Text>
+                        </TouchableOpacity>
+                    </View>
+               </View>
+               
+
+           </SafeAreaView>
+       )
+   }
+
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.userInfo}>
-                <Image source={require('../assets/icons8-Office-Beyonce.png')} style={styles.profileImage}/>
-                <Text style={styles.profileText}>{profile.name === ""? "Enter Name":profile.name}</Text>
-                <Text style={styles.profileText}>{profile.location === ""?"Enter Location":profile.location}</Text>
-                
+                <Text style={{fontSize:30,fontWeight:"bold"}}>{profile.name}</Text>
+                <Text style={{fontSize:25,fontWeight:"300"}}>{profile.city}, {profile.state}</Text>
+                <Text>{profile.email}</Text>
             </View>
-            <TouchableOpacity style={[styles.editButton,showEdit && styles.selected]} onPress={() => setShowEdit(true)}>
-                <Text>Edit Profile</Text>
-            </TouchableOpacity>
-            {showEdit ? 
-                <View style={styles.editArea}>
-                <Text style={{fontSize:20,margin:10}}>Name</Text>
-                <TextInput placeholder="name" style={styles.input} onChangeText={(value) => setName(value)}/>
-                <Text style={{fontSize:20,margin:10}}>Location</Text>
-                <TextInput placeholder="location" style={styles.input} onChangeText={(value) => setLocation(value)}/>
-                <TouchableOpacity style={styles.editButton} onPress={editProfile}>
-                    <Text>Edit</Text>
-                </TouchableOpacity>
-            </View>
-            :
-            <View>
-                <Text>History</Text>
-            </View>
-            }
-            
+        
+         
+          <TouchableOpacity onPress={logOut} style={styles.editButton}><Text>Log out</Text></TouchableOpacity>
         </SafeAreaView>
     )
 }
@@ -73,14 +98,17 @@ export default function ProfileScreen(){
 const styles = StyleSheet.create({
     container:{
         backgroundColor:"white",
-        flex:1
+        flex:1,
+        justifyContent:"center"
     },
     userInfo:{
         backgroundColor:"#D0ECE7",
         borderRadius:10,
         margin:10,
+        padding:20,
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        alignSelf:"center"
     },
     profileText:{
         fontSize:25,

@@ -1132,6 +1132,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@expo-google-fonts/dev@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/dev/-/dev-0.2.0.tgz#b5b32f4026df8480a7f554239610f7e88c267f39"
+  integrity sha512-Y6fnRxfq6eHwB3/a7hn7idLP9taAyNwcBvZBXTP+akUKDSc8mmFNk0axIgNsdvjMPmBf34K8WfWQsQn2Ds/Fqg==
+
 "@expo/config-plugins@2.0.4":
   version "2.0.4"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-2.0.4.tgz"
