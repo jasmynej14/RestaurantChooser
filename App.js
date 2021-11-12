@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './screens/HomeScreen';
+import UsersScreens from './screens/UsersScreens';
 import ProfileScreen from './screens/ProfileScreen';
 import Restaurants from './screens/Restaurants';
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -31,7 +32,7 @@ export default function App({ route }) {
            headerShown:false
          }}
          />
-         <Tab.Screen name="Profile" component={ProfileScreen}
+         <Tab.Screen name="Profile" component={UsersScreens}
            options={{
              tabBarIcon: ({focused}) => (<Icon name="user" size={25} color={focused? "red" : "gray"}/>),
              headerShown:false

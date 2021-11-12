@@ -3,8 +3,9 @@ import { StyleSheet, Text, View,Button,TouchableOpacity,Image,SafeAreaView } fro
 import TypeImage from '../components/TypeImage';
 import { useFonts } from 'expo-font';
 import { Quicksand_400Regular,Quicksand_300Light,Quicksand_600SemiBold} from '@expo-google-fonts/dev';
-import Menu from '../components/Menu';
+import MenuList from '../components/MenuList';
 import Rating from '../components/Rating'
+import Reviews from '../components/Review';
 import axios from 'axios';
 export default function RestaurantInfo({route}){
     const {restaurantID} = route.params
@@ -42,12 +43,16 @@ export default function RestaurantInfo({route}){
             <TouchableOpacity style={styles.compareButton}>
                 <Text>Compare!</Text>
             </TouchableOpacity>
-            <View>
-                <Text>Menus</Text>
-                <Menu rest_id={restaurantID}/>
+            <View style={{margin:10}}>
+                <Text style={{fontSize:20}}>Menus</Text>
+                <MenuList rest_id={restaurantID}/>
             </View>
-            <View>
-                <Text>Reviews</Text>
+            <View style={{margin:10}}>
+                <Text style={{fontSize:20}}>Reviews</Text>
+                <TouchableOpacity style={styles.reviewButton}>
+                    <Text style={{textAlign:"center"}}>Write a Review</Text>
+                </TouchableOpacity>
+                <Reviews rest_id={restaurantID}/>
             </View>
         </SafeAreaView>
     )
@@ -80,5 +85,13 @@ const styles = StyleSheet.create({
         padding:10,
         alignSelf:"center",
         borderRadius:5
+    },
+    reviewButton:{
+        backgroundColor:"#F8C471",
+        padding:10,
+        borderRadius:5,
+        width:"40%",
+        margin:10
+        
     }
 })

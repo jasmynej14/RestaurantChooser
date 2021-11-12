@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, View,Image,StyleSheet,TextInput,SafeAreaView } 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserContext from '../contexts/UserContext';
 import axios from 'axios';
-export default function ProfileScreen(){
+export default function ProfileScreen({navigation}){
     const [profile,setProfile] = useState({})
     const [showEdit,setShowEdit] = useState(false)
     const [email,setEmail] = useState("")
@@ -71,7 +71,7 @@ export default function ProfileScreen(){
                         <TouchableOpacity style={styles.editButton} onPress={logIn}>
                             <Text>Log In</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.editButton}>
+                        <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate("Create")}>
                             <Text>Create Account</Text>
                         </TouchableOpacity>
                     </View>

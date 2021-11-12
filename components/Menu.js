@@ -2,39 +2,31 @@ import React, {useState,useEffect} from 'react';
 import { StyleSheet, Text, View,Button,TouchableOpacity,Image,SafeAreaView } from 'react-native';
 import axios from 'axios';
 
-export default function Menu ({rest_id}) {  
-    const [menus,setMenus] = useState([])
+export default function Menu ({menu_id}){
+    const [menu,setMenu] = useState({})
 
-    const getMenus = () =>{
-        axios.get(`https://dineryapi.herokuapp.com/menus?restaurant=${rest_id}`)
+    const getMenuItems = () => {
+        axios.get(`https://dineryapi.herokuapp.com/menus/${menu_id}/items`)
         .then(function(response){
-            setMenus(response.data)
+            setMenu(response.data)
+         
         })
         .catch(err => console.log(err))
     }
 
     useEffect(() => {
-        getMenus()
+        getMenuItems()
     })
-    return(
+    return (
         <View>
             {
-                menus.map((menu) => {
+                menu.items.map((item) => {
                     return(
-                        <TouchableOpacity style={styles.menu}>
-                           <Text>{menu.name}</Text>
-                        </TouchableOpacity>
+                        <Text>{item.name} ({item.price})</Text>
                     )
+                    
                 })
             }
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    menu:{
-        backgroundColor:"#EAFAF1",
-        padding:10,
-        margin:10
-    }
-})
