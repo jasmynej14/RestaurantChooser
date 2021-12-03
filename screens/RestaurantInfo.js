@@ -1,8 +1,6 @@
 import React, {useState,useEffect,useContext} from 'react';
 import { StyleSheet, Text, View,Button,TouchableOpacity,Image,SafeAreaView } from 'react-native';
 import TypeImage from '../components/TypeImage';
-import { useFonts } from 'expo-font';
-import { Quicksand_400Regular,Quicksand_300Light,Quicksand_600SemiBold} from '@expo-google-fonts/dev';
 import MenuList from '../components/MenuList';
 import Rating from '../components/Rating'
 import Reviews from '../components/Review';
