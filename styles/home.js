@@ -39,6 +39,15 @@ const homeStyles = StyleSheet.create({
         margin:10,
         padding:10,
         borderRadius:10
+    },
+    logIn:{
+        backgroundColor:"#F8C471",
+        margin:20,
+        padding:20,
+        alignSelf:"center"
+    },
+    favorites:{
+        flex:3
     }
 })
 export default homeStyles;

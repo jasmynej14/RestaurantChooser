@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import { StyleSheet, Text, View,Button,TouchableOpacity,Image,SafeAreaView } from 'react-native';
 import TypeImage from '../components/TypeImage';
 import { useFonts } from 'expo-font';
@@ -7,19 +7,43 @@ import MenuList from '../components/MenuList';
 import Rating from '../components/Rating'
 import Reviews from '../components/Review';
 import axios from 'axios';
-export default function RestaurantInfo({route}){
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserContext from '../contexts/UserContext';
+export default function RestaurantInfo({route,navigation}){
     const {restaurantID} = route.params
     const [restaurant,setRestaurant] = useState({})
-    let [fontsLoaded] = useFonts({Quicksand_400Regular,Quicksand_300Light,Quicksand_600SemiBold})
+    const [profile,setProfile] = useState({})
+    const {user,setUser} = useContext(UserContext)
+    const getProfile = async () => {
+        try{
+            const user_profile = await AsyncStorage.getItem('@profile')
+            if(user_profile !== null){
+                setProfile(JSON.parse(user_profile))
+            }
+            
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
     const getRestaurant = () => {
         axios.get(`https://dineryapi.herokuapp.com/restaurants/${restaurantID}`)
         .then(response => setRestaurant(response.data))
         .catch(err => console.log(err))
     }
+    const favorite = () => {
+        axios.post(`https://dineryapi.herokuapp.com/users/${profile._id}/favorite`,{restaurant:restaurantID})
+        .then(response => console.log(response.data))
+        .catch(err => console.log(err))
 
+    }
     useEffect(() => {
         getRestaurant()
     })
+
+    useEffect(() => {
+        getProfile()
+    },[user])
     
     if(JSON.stringify(restaurant) === "{}"){
         return(
@@ -40,7 +64,7 @@ export default function RestaurantInfo({route}){
                 <Text style={styles.address}>{restaurant.location.address}</Text>
                 <Text style={styles.address}>{restaurant.location.city},{restaurant.location.state}</Text>
             </View>
-            <TouchableOpacity style={styles.compareButton}>
+            <TouchableOpacity style={styles.compareButton} onPress={() => navigation.navigate('Compare',{res1Id:restaurant._id})}>
                 <Text>Compare!</Text>
             </TouchableOpacity>
             <View style={{margin:10}}>
@@ -53,6 +77,10 @@ export default function RestaurantInfo({route}){
                     <Text style={{textAlign:"center"}}>Write a Review</Text>
                 </TouchableOpacity>
                 <Reviews rest_id={restaurantID}/>
+
+            </View>
+            <View>
+                <TouchableOpacity style={styles.compareButton} onPress={favorite}><Text>Favorite</Text></TouchableOpacity>
             </View>
         </SafeAreaView>
     )
@@ -65,7 +93,7 @@ const styles = StyleSheet.create({
     },
     name:{
         fontSize:40,
-        fontFamily:'Quicksand_600SemiBold',
+       
         textAlign:"center"
     },
     infoBox:{
@@ -77,7 +105,7 @@ const styles = StyleSheet.create({
        alignItems:"center" 
     },
     address:{
-        fontFamily:'Quicksand_400Regular',
+        
         fontSize:20
     },
     compareButton:{

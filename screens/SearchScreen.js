@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     filterButton:{
         backgroundColor:"#FEF9E7",
         borderRadius:5,
-        padding:5,
+        padding:15,
         marginRight:10,
         minWidth:100,
         justifyContent:"center",
