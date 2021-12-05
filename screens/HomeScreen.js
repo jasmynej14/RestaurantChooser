@@ -9,37 +9,17 @@ import UserContext from '../contexts/UserContext';
 
 import axios from 'axios'
 export default function HomeScreen({ navigation }){
-    let [fontsLoaded] = useFonts({Quicksand_400Regular})
-    const {user,setUser} = useContext(UserContext)
-    const [recos,setRecos] = useState([])
-    const [favs,setFavs] = useState([])
-    const [profile,setProfile] = useState({})
     
-
-    const getProfile = async () => {
-        try{
-            const user_profile = await AsyncStorage.getItem('@profile')
-            if(user_profile !== null){
-                setProfile(JSON.parse(user_profile))
-                
-                //setFavs(user_profile.favorites)
-            }
-            
-        }
-        catch(e){
-            console.log(e)
-        }
-    }
-
+    const [favs,setFavs] = useState([])
     const getFavorites = () => {
-        axios.get(`https://dineryapi.herokuapp.com/users/${profile._id}`)
+        axios.get(`https://dineryapi.herokuapp.com/users/618c6387e99eafda86bc0621`)
                 .then(function(response){
                     
                     setFavs(response.data.favorites)
         }).catch(err => console.log(err))
     }
    const renderFavorite = (restaurant) => { 
-       console.log(restaurant)
+       //console.log(restaurant)
        return(
         <TouchableOpacity>
             <Restaurant restaurant={restaurant.item}/>
@@ -48,30 +28,16 @@ export default function HomeScreen({ navigation }){
    }
 
     useEffect(() => {
-        getProfile()
         getFavorites()
-    },[user])
-    if(JSON.stringify(user) === "{}"){
-        return (
-            <SafeAreaView style={homeStyles.container}>
-                <View style={homeStyles.header}>
-                    <Text style={{fontSize:60,textAlign:"center"}}>Dinery</Text>
-                </View>
-                
-                
-                <TouchableOpacity style={homeStyles.logIn} onPress={() => navigation.navigate('Profile')}>
-                    <Text>Log In/Sign Up for the Full Experience</Text>
-                </TouchableOpacity>
-            </SafeAreaView>
-        )
-    }
+    })
+    
     return(
         <SafeAreaView style={homeStyles.container}>
            <View style={homeStyles.header}>
                <Text style={{fontSize:60,textAlign:"center"}}>Dinery</Text>
            </View>
            <View style={homeStyles.favorites}>
-               <Text style={{fontSize:30,textAlign:"center"}}>{profile.name}'s Favorite Restaurants</Text>
+               <Text style={{fontSize:30,textAlign:"center"}}>Bruno's Favorite Restaurants</Text>
                
                 <FlatList data={favs} renderItem={renderFavorite} keyExtractor={(item) => item._id}/>
            </View>

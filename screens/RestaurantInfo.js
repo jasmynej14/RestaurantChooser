@@ -12,25 +12,14 @@ export default function RestaurantInfo({route,navigation}){
     const [restaurant,setRestaurant] = useState({})
     const [profile,setProfile] = useState({})
     const {user,setUser} = useContext(UserContext)
-    const getProfile = async () => {
-        try{
-            const user_profile = await AsyncStorage.getItem('@profile')
-            if(user_profile !== null){
-                setProfile(JSON.parse(user_profile))
-            }
-            
-        }
-        catch(e){
-            console.log(e)
-        }
-    }
+   
     const getRestaurant = () => {
         axios.get(`https://dineryapi.herokuapp.com/restaurants/${restaurantID}`)
         .then(response => setRestaurant(response.data))
         .catch(err => console.log(err))
     }
     const favorite = () => {
-        axios.post(`https://dineryapi.herokuapp.com/users/${profile._id}/favorite`,{restaurant:restaurantID})
+        axios.post(`https://dineryapi.herokuapp.com/users/${user._id}/favorite`,{restaurant:restaurantID})
         .then(response => console.log(response.data))
         .catch(err => console.log(err))
 
@@ -39,9 +28,6 @@ export default function RestaurantInfo({route,navigation}){
         getRestaurant()
     })
 
-    useEffect(() => {
-        getProfile()
-    },[user])
     
     if(JSON.stringify(restaurant) === "{}"){
         return(

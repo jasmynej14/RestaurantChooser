@@ -24,7 +24,10 @@ export default function Reviews({rest_id}){
         )
     }
     useEffect(() => {
-        getReviews()
+        if(rest_id){
+            getReviews()
+        }
+        
     })
 
     return (

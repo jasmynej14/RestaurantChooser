@@ -6,18 +6,24 @@ export default function Menu ({menu_id}){
     const [menu,setMenu] = useState({})
     const [loading,setLoading] = useState(false)
     const getMenuItems = () => {
-        axios.get(`https://dineryapi.herokuapp.com/menus/${menu_id}/items`)
-        .then(function(response){
+        if(menu_id !== undefined || menu_id !== null){
+            axios.get(`https://dineryapi.herokuapp.com/menus/${menu_id}/items`)
+            .then(function(response){
             setLoading(true)
             setMenu(response.data)
             setLoading(false)
          
         })
         .catch(err => console.log(err))
+        }
+        
     }
 
     useEffect(() => {
-        getMenuItems()
+        if(menu_id){
+            getMenuItems()
+        }
+       
     })
 
     if(menu.items === undefined){

@@ -34,9 +34,6 @@ export default function SearchScreen({navigation}){
         )
     }
 
-    const filterRestaurants = () => {
-
-    }
     const setFilter = (category) => {
         if(cuisine === category){
             setCuisine("")
@@ -91,7 +88,7 @@ const styles = StyleSheet.create({
       
     },
     filterButton:{
-        backgroundColor:"#FEF9E7",
+        backgroundColor:"#F2F3F4",
         borderRadius:5,
         padding:15,
         marginRight:10,

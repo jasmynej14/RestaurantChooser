@@ -7,28 +7,35 @@ export default function Restaurant({restaurant,navigation}){
     let types = ""
     let cuisines = ""
     const renderType = () =>{
-        restaurant.type.map((type) => {
-            if(type==="dine-in"){
-                types+= "Dine-In "
-            }
-            else if(type==="take-out"){
-                types+="Take Out "
-            }
-            else{
-                type+= "Delivery "
-            }
-        })
+        if(restaurant.type !== undefined){
+            restaurant.type.map((type) => {
+                if(type==="dine-in"){
+                    types+= "Dine-In "
+                }
+                else if(type==="take-out"){
+                    types+="Take Out "
+                }
+                else{
+                    type+= "Delivery "
+                }
+            })
+        }
+        
     }
 
     const renderCuisines = () => {
-        restaurant.cuisine.map((cui) => {
-            cuisines+=cui
-            cuisines+=" "
-        })
+        if(restaurant.cuisine !== undefined){
+            restaurant.cuisine.map((cui) => {
+                cuisines+=cui
+                cuisines+=" "
+            })
+        }
+        
     }
     renderType()
     renderCuisines()
-    return(
+    if(restaurant.type !== undefined || restaurant.cuisine !== undefined){
+        return(
         
             <View style={styles.restaurantBox}>
                 <View>
@@ -45,6 +52,15 @@ export default function Restaurant({restaurant,navigation}){
            
     
     )
+    }
+    else{
+        return(
+            <View style={styles.restaurantBox}>
+                <Text>Restaurant not loaded!</Text>
+            </View>
+        )
+    }
+    
 }
 
 const styles = StyleSheet.create({
