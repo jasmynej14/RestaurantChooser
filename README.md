@@ -4,6 +4,8 @@ COSI 153a
 
 Dinery is an app that will allow you to search restaurants based on your criteria, view the menus, and compare and contrast restuarants to help you decide what you want to eat
 
+Movie link: https://drive.google.com/file/d/1SH549FWnI9S1OJ8rtD6ErOUrBNOFCD7R/view?usp=sharing
+
 ## Screenshots
 <div align="center">
   <img src="https://user-images.githubusercontent.com/44778592/144896532-c747f368-9cdb-4bc8-b8fc-f606d0c1e2b4.PNG" height=500>
